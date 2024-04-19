@@ -1,0 +1,4 @@
+requests
+opentelemetry-distro
+opentelemetry-exporter-otlp
+
