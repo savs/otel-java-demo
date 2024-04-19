@@ -9,7 +9,7 @@ Based on https://opentelemetry.io/docs/languages/java/getting-started/
 
 * JDK `brew install openjdk`
 * Gradle `brew install gradle`
-* Grafana Alloy running and configured to collect opentelemetry and send it to Grafana Cloud
+* [Grafana Alloy](https://grafana.com/oss/alloy-opentelemetry-collector/) running and configured to collect opentelemetry and send it to Grafana Cloud
 
 # Agent config
 
@@ -152,19 +152,23 @@ Do this because gradle builds based on the current working directory name. Put t
 * Note here that localhost:4317 references Grafana Alloy. Check it's running: `lsof -i TCP:4317`
 * Note that we need to reset the exporters (default is otlp, but we previously set to logging above)
 
-    export OTEL_SERVICE_NAME=demodice \
-    OTEL_RESOURCE_ATTRIBUTES=deployment.environment=development,service.name=demodice,service.instance.id=98606 \
-    OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-    OTEL_EXPORTER_OTLP_PROTOCOL=grpc \
-    OTEL_TRACES_EXPORTER=otlp \
-    OTEL_METRICS_EXPORTER=otlp \
-    OTEL_LOGS_EXPORTER=otlp \
-    OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true \
-    OTEL_EXPORTER_OTLP_INSECURE=true \
-    JAVA_TOOL_OPTIONS="-javaagent:./opentelemetry-javaagent.jar"
-    ./run.sh
+Run like this (use the run.sh script):
+
+	export OTEL_SERVICE_NAME=demodice \
+	OTEL_RESOURCE_ATTRIBUTES=deployment.environment=development,service.name=demodice,service.instance.id=98606 \
+	OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
+	OTEL_EXPORTER_OTLP_PROTOCOL=grpc \
+	OTEL_TRACES_EXPORTER=otlp \
+	OTEL_METRICS_EXPORTER=otlp \
+	OTEL_LOGS_EXPORTER=otlp \
+	OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true \
+	OTEL_EXPORTER_OTLP_INSECURE=true \
+	JAVA_TOOL_OPTIONS="-javaagent:./opentelemetry-javaagent.jar"
+	./run.sh
 
 # Create some load so we can see what's going on
+
+Use the load.sh script:
 
 	while true
 	do
